@@ -1,10 +1,10 @@
-------------------------------------------------
---
--- Freecam.lua
--- Written by: Fractality
--- Edited by: TheGamer101, to make it work without the screen gui, remove the Class library
--- and add alternative key bindings.
-------------------------------------------------
+-- TODO:
+-- Investigate modules and scripts
+-- Leave appropriate comments
+
+
+-- cunts shouldve explained what they've done wouldve served as great educational material
+
 
 -- To exit and enter free camera, use key shortcut Left Shift + P
 
@@ -53,11 +53,11 @@ end
 ------------------------------------------------
 
 local DEF_FOV = 70
-local NM_ZOOM = math.tan(DEF_FOV * math.pi/360)
+local NM_ZOOM = math.tan(DEF_FOV * math.pi/360) 
 local LVEL_GAIN = Vector3.new(1, 0.75, 1)
 local RVEL_GAIN = Vector2.new(0.85, 1)/128
 local FVEL_GAIN = -330
-local DEADZONE = 0.125
+local DEADZONE = 0.125 --?? maybe input insignificance? 
 local FOCUS_OFFSET = CFrame.new(0, 0, -16)
 
 local DIRECTION_LEFT = 1
@@ -131,18 +131,18 @@ local function GetChar()
 	end
 end
 
-local function InputCurve(x)
-	local s = math.abs(x)
-	if s > DEADZONE then
-		s = 0.255000975*(2^(2.299113817*s) - 1)
-		return x > 0 and (s > 1 and 1 or s) or (s > 1 and -1 or -s)
+local function InputCurve(x) -- ??
+	local s = math.abs(x) -- absolute value -> remove negative sign
+	if s > DEADZONE then 
+		s = 0.255000975*(2^(2.299113817*s) - 1) -- very specific numbers what for??
+		return x > 0 and (s > 1 and 1 or s) or (s > 1 and -1 or -s) -- returns boolean??
 	end
 	return 0
 end
 
 ------------------------------------------------
 
-local function ProcessInput(input, processed)
+local function ProcessInput(input, processed) -- the parameter for input curve seems to be the total amount a console controller moved in a certain axis, nobody cares about consoles
 	local userInputType = input.UserInputType
 	if userInputType == Enum.UserInputType.Gamepad1 then
 		local keycode = input.KeyCode
@@ -159,17 +159,17 @@ local function ProcessInput(input, processed)
 			gp_r1 = input.Position.z
 		end
 	elseif userInputType == Enum.UserInputType.MouseWheel then
-		rate_fov = input.Position.Z
+		rate_fov = input.Position.Z -- fov change rate
 	end
 end
 
-UIS.InputChanged:Connect(ProcessInput)
+UIS.InputChanged:Connect(ProcessInput) 
 UIS.InputEnded:Connect(ProcessInput)
-UIS.InputBegan:Connect(ProcessInput)
+UIS.InputBegan:Connect(ProcessInput)  
 
 ------------------------------------------------
 
-local function IsDirectionDown(direction)
+local function IsDirectionDown(direction) -- boolean if any of the following keys are being pressed
 	for i = 1, #KEY_MAPPINGS[direction] do
 		if UIS:IsKeyDown(KEY_MAPPINGS[direction][i]) then
 			return true
@@ -190,19 +190,19 @@ local UpdateFreecam do
 		local kx = (IsDirectionDown(DIRECTION_RIGHT) and 1 or 0) - (IsDirectionDown(DIRECTION_LEFT) and 1 or 0)
 		local ky = (IsDirectionDown(DIRECTION_UP) and 1 or 0) - (IsDirectionDown(DIRECTION_DOWN) and 1 or 0)
 		local kz = (IsDirectionDown(DIRECTION_BACKWARD) and 1 or 0) - (IsDirectionDown(DIRECTION_FORWARD) and 1 or 0)
-		local km = (kx * kx) + (ky * ky) + (kz * kz)
-		if km > 1e-15 then
+		local km = (kx * kx) + (ky * ky) + (kz * kz) -- modifier??
+		if km > 1e-15 then -- this is retarded why???
 			km = ((UIS:IsKeyDown(Enum.KeyCode.LeftShift) or UIS:IsKeyDown(Enum.KeyCode.RightShift)) and 1/4 or 1)/math.sqrt(km)
-			kx = kx * km
+			kx = kx * km -- seems like it...
 			ky = ky * km
 			kz = kz * km
 		end
 
-		local dx = kx + gp_x
-		local dy = ky + gp_r1 - gp_l1
-		local dz = kz + gp_z
-
-		velSpring.t = Vector3.new(dx, dy, dz) * SpeedModifier
+		local dx = kx + gp_x -- delta x
+		local dy = ky + gp_r1 - gp_l1 -- delta y
+		local dz = kz + gp_z -- delta z
+                -- delta because spring physics
+		velSpring.t = Vector3.new(dx, dy, dz) * SpeedModifier -- final vector
 		rotSpring.t = panDeltaMouse + panDeltaGamepad
 		fovSpring.t = Clamp(fovSpring.t + dt * rate_fov*FVEL_GAIN, 5, 120)
 
@@ -228,7 +228,7 @@ end
 
 local function Panned(input, processed)
 	if not processed and input.UserInputType == Enum.UserInputType.MouseMovement then
-		local delta = input.Delta
+		local delta = input.Delta -- mouse position delta, distance from new position to old position, screen space??
 		panDeltaMouse = Vector2.new(-delta.y, -delta.x)
 	end
 end
