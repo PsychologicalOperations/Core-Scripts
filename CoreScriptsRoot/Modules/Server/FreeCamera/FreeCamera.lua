@@ -199,7 +199,7 @@ local UpdateFreecam do
 		local ky = (IsDirectionDown(DIRECTION_UP) and 1 or 0) - (IsDirectionDown(DIRECTION_DOWN) and 1 or 0) -- seems like a normalization vector, logically cant move in both directions in same time
 		local kz = (IsDirectionDown(DIRECTION_BACKWARD) and 1 or 0) - (IsDirectionDown(DIRECTION_FORWARD) and 1 or 0) -- seems like a normalization vector, logically cant move in both directions in same time
 		local km = (kx * kx) + (ky * ky) + (kz * kz) -- modifier??
-		if km > 1e-15 then -- this is retarded why???
+		if km > 1e-15 then -- checking if the vector is higher than 0.000001??
 			km = ((UIS:IsKeyDown(Enum.KeyCode.LeftShift) or UIS:IsKeyDown(Enum.KeyCode.RightShift)) and 1/4 or 1)/math.sqrt(km)
 			kx = kx * km -- seems like it...
 			ky = ky * km
