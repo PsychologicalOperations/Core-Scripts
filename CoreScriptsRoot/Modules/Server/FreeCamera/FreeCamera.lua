@@ -53,7 +53,15 @@ end
 ------------------------------------------------
 
 local DEF_FOV = 70
-local NM_ZOOM = math.tan(DEF_FOV * math.pi/360) 
+local NM_ZOOM = math.tan(DEF_FOV * math.pi/360) -- convert to radian and use tangent
+--[[
+above variable is converting the fov to radians and then using a tangent function from trigonometry
+why? because the bigger the fov the smaller the radian and the smaller the final value leaving me to believe this is a modifier for the final velocity based on the fov of the camera
+because the bigger the fov the faster things seem and the smaller the fov the slower it seems
+
+source:
+https://www.mathsisfun.com/algebra/trig-interactive-unit-circle.html
+]]--
 local LVEL_GAIN = Vector3.new(1, 0.75, 1)
 local RVEL_GAIN = Vector2.new(0.85, 1)/128
 local FVEL_GAIN = -330
