@@ -214,7 +214,7 @@ local UpdateFreecam do
 		panDeltaMouse = Vector2.new()
 
 		stateRot = stateRot + dRot
-		stateRot = Vector2.new(Clamp(stateRot.x, -3/2, 3/2), stateRot.y)
+		stateRot = Vector2.new(Clamp(stateRot.x, -3/2, 3/2), stateRot.y) -- radians, find out further
 
 		local c = CFrame.new(camCFrame.p) * CFrame.Angles(0, stateRot.y, 0) * CFrame.Angles(stateRot.x, 0, 0) * CFrame.new(dPos)
 
@@ -285,8 +285,8 @@ local function EnterFreecam()
 	local lookVector = camCFrame.lookVector.unit
 
 	stateRot = Vector2.new(
-		math.asin(lookVector.y),
-		math.atan2(-lookVector.z, lookVector.x) - math.pi/2
+		math.asin(lookVector.y), -- find out why
+		math.atan2(-lookVector.z, lookVector.x) - math.pi/2-- find out why
 	)
 	panDeltaMouse = Vector2.new()
 
