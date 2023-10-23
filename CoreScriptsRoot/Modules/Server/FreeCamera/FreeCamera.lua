@@ -206,9 +206,9 @@ local UpdateFreecam do
 			kz = kz * km
 		end
 
-		local dx = kx + gp_x -- delta x
-		local dy = ky + gp_r1 - gp_l1 -- delta y
-		local dz = kz + gp_z -- delta z
+		local dx = kx + gp_x -- one of the two is zero and now we have the final value for either console or keyboard
+		local dy = ky + gp_r1 - gp_l1 -- one of the two is zero and now we have the final value for either console or keyboard
+		local dz = kz + gp_z -- one of the two is zero and now we have the final value for either console or keyboard
                 -- delta because spring physics
 		velSpring.t = Vector3.new(dx, dy, dz) * SpeedModifier -- final vector, direction times the speed
 		rotSpring.t = panDeltaMouse + panDeltaGamepad
