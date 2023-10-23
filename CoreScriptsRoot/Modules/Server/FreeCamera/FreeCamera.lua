@@ -118,7 +118,7 @@ local fovSpring = Spring.new(2,   1/3, 1, 0)
 
 local letterbox = CreateLetterBox()
 
-local gp_x  = 0
+local gp_x  = 0 -- gp variables for console players, adding up both keyboard and console velocities instead of checking if a console or keyboard is used
 local gp_z  = 0
 local gp_l1 = 0
 local gp_r1 = 0
