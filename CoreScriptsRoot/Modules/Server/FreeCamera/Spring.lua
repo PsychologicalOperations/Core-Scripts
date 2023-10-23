@@ -4,7 +4,7 @@ Spring.__index = Spring
 
 function Spring:Update(dt) -- investigate later, maybe multiple points with springs in between
 	local t, k, d, x0, v0 = self.t, self.k, self.d, self.x, self.v
-	local a0 = k*(t - x0) + v0*d
+	local a0 = k*(t - x0) + v0*d -- spring force used as acceleration, imagine acceleration graph with spring properties
 	local v1 = v0 + a0*(dt/2)
 	local a1 = k*(t - (x0 + v0*(dt/2))) + v1*d
 	local v2 = v0 + a1*(dt/2)
