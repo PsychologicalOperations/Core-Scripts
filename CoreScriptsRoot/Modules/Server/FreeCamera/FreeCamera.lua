@@ -210,7 +210,7 @@ local UpdateFreecam do
 		local dy = ky + gp_r1 - gp_l1 -- delta y
 		local dz = kz + gp_z -- delta z
                 -- delta because spring physics
-		velSpring.t = Vector3.new(dx, dy, dz) * SpeedModifier -- final vector
+		velSpring.t = Vector3.new(dx, dy, dz) * SpeedModifier -- final vector, direction times the speed
 		rotSpring.t = panDeltaMouse + panDeltaGamepad
 		fovSpring.t = Clamp(fovSpring.t + dt * rate_fov*FVEL_GAIN, 5, 120)
 
